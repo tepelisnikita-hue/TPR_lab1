@@ -36,7 +36,11 @@ void Novelist::input() {
     std::getline(std::cin, fio);
 
     std::cout << "Введите годы жизни: ";
-    std::cin >> lifeYears;
+    if (!(std::cin >> lifeYears)) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        throw BaseException("Ошибка: введено не число для годов жизни!");
+    }
     if (lifeYears < 0) throw BaseException("Годы жизни не могут быть отрицательными!");
 
     std::cout << "Введите произведения: ";
@@ -56,20 +60,27 @@ void Novelist::edit() {
     std::cout << "Редактирование романиста (оставьте пустым для пропуска):\n";
 
     std::string s;
-    int y;
 
     std::cout << "Новое ФИО [" << fio << "]: ";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, s);
     if (!s.empty()) fio = s;
 
-    std::cout << "Новые годы жизни [" << lifeYears << "]: ";
-    std::cin >> y;
-    if (y < 0) throw BaseException("Годы жизни не могут быть отрицательными!");
-    lifeYears = y;
+    std::cout << "Новые годы жизни [" << lifeYears << "] (Enter для пропуска): ";
+    std::string yearStr;
+    std::getline(std::cin, yearStr);
+    if (!yearStr.empty()) {
+        int y = 0;
+        try {
+            y = std::stoi(yearStr);
+        } catch (...) {
+            throw BaseException("Ошибка: некорректный формат числа при редактировании!");
+        }
+        if (y < 0) throw BaseException("Годы жизни не могут быть отрицательными!");
+        lifeYears = y;
+    }
 
     std::cout << "Новые произведения [" << works << "]: ";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, s);
     if (!s.empty()) works = s;
 
