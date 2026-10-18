@@ -96,7 +96,8 @@ void Novelist::save(std::ostream &out) const {
 void Novelist::load(std::istream &in) {
     std::getline(in >> std::ws, fio);
     in >> lifeYears;
-    std::getline(in >> std::ws, works);
+    in >> std::ws;
+    std::getline(in, works);
     std::getline(in >> std::ws, biography);
     if (!in) throw BaseException("Ошибка чтения данных романиста!");
 }

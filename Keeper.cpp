@@ -103,6 +103,8 @@ void Keeper::loadData(const std::string &filename) {
     for (int i = 0; i < newSize; ++i) {
         std::string type;
         file >> type;
+        file >> std::ws;
+
         BaseEdition *edition = nullptr;
         if (type == "Poet") {
             edition = new Poet();

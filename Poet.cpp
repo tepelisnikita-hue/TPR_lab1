@@ -88,6 +88,7 @@ void Poet::save(std::ostream &out) const {
 void Poet::load(std::istream &in) {
     std::getline(in >> std::ws, fio);
     in >> lifeYears;
-    std::getline(in >> std::ws, mainWorks);
+    in >> std::ws;
+    std::getline(in, mainWorks);
     if (!in) throw BaseException("Ошибка чтения данных поэта!");
 }
